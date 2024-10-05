@@ -2,16 +2,21 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymysql
 import bcrypt
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
 # Database connection details
 db_config = {
-    'host': 'sql12.freesqldatabase.com',
-    'user': 'sql12735355',
-    'password': 'WE1CeJXLwC',
-    'database': 'sql12735355'
+    'host': os.getenv('DB_HOST'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME')
 }
 
 # Helper function to connect to the database
@@ -54,7 +59,6 @@ def register():
     finally:
         connection.close()
 
-
 @app.route('/login', methods=['POST'])
 def login_user():
     data = request.get_json()
@@ -80,4 +84,3 @@ def login_user():
         return jsonify({"message": "Database error", "error": str(e)}), 500
     finally:
         connection.close()
-

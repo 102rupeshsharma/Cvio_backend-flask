@@ -5,7 +5,7 @@ import bcrypt
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -84,3 +84,7 @@ def login_user():
         return jsonify({"message": "Database error", "error": str(e)}), 500
     finally:
         connection.close()
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
